@@ -15,6 +15,8 @@ COMPLETE FEATURES DELIVERED:
 ✅ Professional UI/UX – Modern gradient design, dark mode toggle, smooth animations
 ✅ Zero Dependencies – Pure HTML/CSS/JavaScript, no external libraries
 ✅ Production Ready – All code complete, no TODOs, fully functional
+Chart:
+<img width="1498" height="627" alt="image" src="https://github.com/user-attachments/assets/1994d279-280d-4bd7-8288-d1c3daff4d80" />
 
 KEY SECTIONS:
 
