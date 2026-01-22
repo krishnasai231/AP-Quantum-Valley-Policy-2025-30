@@ -47,10 +47,15 @@ Global Context: Investment comparison, market projections, leading quantum provi
 
 TECHNICAL EXCELLENCE:
 ✓ Accessible design (semantic HTML, ARIA labels)
+
 ✓ Fast performance (optimized CSS, minimal JavaScript)
+
 ✓ Professional color system (primary: #0066cc, accent: #00d4ff)
+
 ✓ Responsive grid layouts
+
 ✓ Smooth transitions & animations
+
 ✓ Download capabilities for calculations
 
 This dashboard transforms the complex 40+ page PDF into an intuitive, interactive platform for policymakers, investors, startups, and academic researchers to understand opportunities and calculate their incentive eligibility.
