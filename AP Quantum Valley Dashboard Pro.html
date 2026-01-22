@@ -1,0 +1,2781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP Quantum Valley Policy 2025-30 Dashboard</title>
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #0052a3;
+            --secondary: #ff6b35;
+            --accent: #00d4ff;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --text: #2c3e50;
+            --border: #e0e0e0;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.2);
+            --lang: 'en';
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 0 10px rgba(0,212,255,0.3);
+        }
+
+        .btn-search {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-search:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .search-results-panel {
+            background: white;
+            position: absolute;
+            top: 100%;
+            left: 20px;
+            right: 20px;
+            max-width: 500px;
+            max-height: 400px;
+            overflow-y: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            margin-top: 10px;
+            z-index: 999;
+        }
+
+        .search-result-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-result-item:hover {
+            background: var(--light);
+            padding-left: 20px;
+        }
+
+        .search-result-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .search-result-snippet {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .lang-select {
+            padding: 8px 12px;
+            border: 2px solid white;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .lang-select:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--light);
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background: #00b8d4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,212,255,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .nav-tab.active {
+            background: var(--accent);
+            color: var(--dark);
+            border-color: white;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #003d82 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            opacity: 0.95;
+            max-width: 800px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card.accent-primary {
+            border-left-color: var(--primary);
+        }
+
+        .card.accent-secondary {
+            border-left-color: var(--secondary);
+        }
+
+        .card.accent-success {
+            border-left-color: var(--success);
+        }
+
+        .card.accent-warning {
+            border-left-color: var(--warning);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .card .stat {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 15px 0 10px 0;
+        }
+
+        .card .label {
+            color: #666;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card .description {
+            color: #555;
+            font-size: 14px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .incentive-category {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--secondary);
+        }
+
+        .incentive-category h4 {
+            color: var(--secondary);
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .incentive-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .detail-item {
+            padding: 12px;
+            background: var(--light);
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .detail-item .label {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 13px;
+        }
+
+        .detail-item .value {
+            color: var(--secondary);
+            font-size: 14px;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .calculator-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            margin: 20px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .results-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: var(--shadow-lg);
+            display: none;
+        }
+
+        .results-box.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .results-box h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .result-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .result-item .label {
+            opacity: 0.9;
+            font-size: 13px;
+        }
+
+        .result-item .value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+            color: var(--accent);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-marker {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-content {
+            margin-left: 20px;
+            flex-grow: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-content h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: var(--light);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: rgba(0,102,204,0.15);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background: rgba(46,204,113,0.15);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(243,156,18,0.15);
+            color: var(--warning);
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: var(--primary);
+            margin: 30px 0 20px 0;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .subsection-title {
+            font-size: 20px;
+            color: var(--primary);
+            margin: 25px 0 15px 0;
+            font-weight: 600;
+        }
+
+        .collapsible {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .collapsible.active {
+            background: var(--light);
+            border-color: var(--primary);
+        }
+
+        .collapsible-title {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .collapsible-icon {
+            color: var(--primary);
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible.active .collapsible-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsible.active .collapsible-content {
+            max-height: 2000px;
+        }
+
+        .content-inner {
+            padding: 15px 0;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .stakeholder-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid var(--secondary);
+            box-shadow: var(--shadow);
+        }
+
+        .stakeholder-card h4 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .stakeholder-card .role {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .stakeholder-card .description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .key-points {
+            background: var(--light);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .key-points li {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin: 20px 0;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            height: 250px;
+            margin: 20px 0;
+        }
+
+        .bar {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 6px 6px 0 0;
+            position: relative;
+            min-height: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+            box-shadow: 0 5px 15px rgba(0,102,204,0.3);
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .download-btn {
+            background: var(--success);
+            color: white;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+
+        .download-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46,204,113,0.3);
+        }
+
+        .case-study-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .case-study-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .case-header h3 {
+            color: var(--secondary);
+            font-size: 18px;
+            margin: 0;
+            flex: 1;
+        }
+
+        .case-body {
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .case-body p {
+            margin: 10px 0;
+        }
+
+        .case-details {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        .case-details .detail {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .case-details .detail:last-child {
+            border-bottom: none;
+        }
+
+        .impact {
+            background: rgba(255, 107, 53, 0.08);
+            padding: 12px;
+            border-left: 3px solid var(--secondary);
+            border-radius: 4px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 3px solid var(--primary);
+        }
+
+        .footer p {
+            margin: 5px 0;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .search-container {
+                max-width: 100%;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .controls {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .nav-tabs {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .nav-tab {
+                flex: 1;
+                min-width: 80px;
+                font-size: 11px;
+            }
+
+            .case-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .case-header h3 {
+                margin-bottom: 10px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .hero {
+                padding: 25px;
+            }
+
+            .calculator-form {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .comparison-table {
+                font-size: 12px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+
+            main {
+                padding: 10px;
+            }
+
+            .bar-chart {
+                height: 150px;
+            }
+
+            .bar-label {
+                bottom: -35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">🌌 Quantum Valley Dashboard Pro</div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search policy, incentives, case studies..." class="search-box" onkeyup="performSearch()">
+                <button onclick="clearSearch()" class="btn-search">✕</button>
+            </div>
+            <div class="controls">
+                <select id="languageSelect" onchange="changeLanguage()" class="lang-select">
+                    <option value="en">English</option>
+                    <option value="te">తెలుగు (Telugu)</option>
+                    <option value="hi">हिंदी (Hindi)</option>
+                </select>
+                <button class="btn-secondary" onclick="toggleDarkMode()">🌙 Dark</button>
+                <button class="btn-primary" onclick="exportToPDF()">📄 PDF</button>
+            </div>
+        </div>
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="switchTab(0, this)">Overview</div>
+            <div class="nav-tab" onclick="switchTab(1, this)">Policy Details</div>
+            <div class="nav-tab" onclick="switchTab(2, this)">Incentives</div>
+            <div class="nav-tab" onclick="switchTab(3, this)">Calculator</div>
+            <div class="nav-tab" onclick="switchTab(4, this)">Timeline</div>
+            <div class="nav-tab" onclick="switchTab(5, this)">Case Studies</div>
+            <div class="nav-tab" onclick="switchTab(6, this)">Success Metrics</div>
+            <div class="nav-tab" onclick="switchTab(7, this)">Investor Prospectus</div>
+            <div class="nav-tab" onclick="switchTab(8, this)">Stakeholders</div>
+            <div class="nav-tab" onclick="switchTab(9, this)">Global Context</div>
+        </div>
+        <div id="searchResults" class="search-results-panel" style="display: none;"></div>
+    </header>
+
+    <main>
+        <!-- OVERVIEW TAB -->
+        <section id="tab-0" class="active">
+            <div class="hero">
+                <h1>⚡ Andhra Pradesh Quantum Valley Initiative 2025-30</h1>
+                <p>Positioning Amaravati as India's Quantum Computing Hub with Strategic Infrastructure, Talent Development, and Global Partnerships. A transformative 5-year roadmap to establish 3,000 qubits, 100+ startups, and INR 5,000 crore annual exports.</p>
+            </div>
+
+            <h2 class="section-title">🎯 Strategic Objectives</h2>
+            <div class="grid">
+                <div class="card accent-primary">
+                    <h3>Living-Lab Infrastructure</h3>
+                    <p class="description">QChipIN - India's largest open quantum testbed enabling pilots and end-to-end access to quantum hardware, tools, and expertise.</p>
+                    <div class="stat">90 Lakh</div>
+                    <div class="label">Sq.ft. Built-up Area</div>
+                </div>
+                <div class="card accent-secondary">
+                    <h3>Supply-Chain Acceleration</h3>
+                    <p class="description">Drive domestic production of quantum hardware and components for self-reliant supply chain.</p>
+                    <div class="stat">INR 5,000 Cr</div>
+                    <div class="label">Annual Exports Target by 2030</div>
+                </div>
+                <div class="card accent-success">
+                    <h3>Talent & Capacity Building</h3>
+                    <p class="description">Integrated quantum skilling ecosystem across universities with specialists training programs.</p>
+                    <div class="stat">5,000+</div>
+                    <div class="label">Specialists to Train</div>
+                </div>
+                <div class="card accent-warning">
+                    <h3>Startup & Investment Catalyst</h3>
+                    <p class="description">Foster quantum startups through funding, mentorship, and infrastructure access.</p>
+                    <div class="stat">100+</div>
+                    <div class="label">Quantum Startups to Support</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">📊 Key Performance Targets</h2>
+            <div class="metrics-grid">
+                <div class="metric">
+                    <div class="metric-value">3,000</div>
+                    <div class="metric-label">Total Qubits</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">3</div>
+                    <div class="metric-label">Distinct Qubit Technologies</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">20</div>
+                    <div class="metric-label">Universities Empowered</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">USD 1B</div>
+                    <div class="metric-label">Investment Attraction</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">🏢 Infrastructure Development</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Quantum Valley Towers</h3>
+                    <div class="description">
+                        <strong>Built-up Area:</strong> 90 Lakh sq.ft<br/>
+                        <strong>Seating Capacity:</strong> 80,000<br/>
+                        <strong>Reduced Rental Rates:</strong> Lower entry barriers for startups & academic institutions<br/>
+                        <strong>Focus:</strong> Global quantum firms, high-growth startups, academic spin-offs
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Quantum Hardware Park</h3>
+                    <div class="description">
+                        <strong>Subsidized Land:</strong> Industrial land at highly reduced rates<br/>
+                        <strong>24/7 Utilities:</strong> Power, water, high-speed connectivity<br/>
+                        <strong>Target:</strong> Quantum hardware & components manufacturing hub<br/>
+                        <strong>Supply Chain:</strong> Chip fabrication to quantum sensors
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">🌍 Global Investment Context</h2>
+            <div class="chart-container">
+                <p style="color: #666; margin-bottom: 15px; font-weight: 600;">Global Public Investment in Quantum R&D (Approx. USD 40B+ Total)</p>
+                <div class="bar-chart">
+                    <div class="bar" style="height: 85%; background: linear-gradient(135deg, #dc3545, #ff6b6b);">
+                        <div class="bar-value">USD 15B</div>
+                        <div class="bar-label">China</div>
+                    </div>
+                    <div class="bar" style="height: 57%; background: linear-gradient(135deg, #0066cc, #00a2ff);">
+                        <div class="bar-value">USD 10B</div>
+                        <div class="bar-label">EU</div>
+                    </div>
+                    <div class="bar" style="height: 29%; background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                        <div class="bar-value">USD 5B</div>
+                        <div class="bar-label">USA</div>
+                    </div>
+                    <div class="bar" style="height: 21%; background: linear-gradient(135deg, #f39c12, #e67e22);">
+                        <div class="bar-value">USD 3.5B+</div>
+                        <div class="bar-label">Others</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- POLICY DETAILS TAB -->
+        <section id="tab-1">
+            <h2 class="section-title">📋 Complete Policy Framework</h2>
+            
+            <div class="collapsible active">
+                <div class="collapsible-title">1. PREAMBLE & STRATEGIC VISION</div>
+                <div class="collapsible-icon">⋮</div>
+                <div class="collapsible-content">
+                    <div class="content-inner">
+                        <p>The Government of Andhra Pradesh recognizes the <span class="highlight">transformative potential of Quantum Computing</span> and its strategic importance to national competitiveness and technological sovereignty. This policy aligns with India's National Quantum Mission and builds upon AP's pioneering initiatives including:</p>
+                        <div class="key-points">
+                            <ul>
+                                <li>Amaravati Quantum Valley establishment</li>
+                                <li>Amaravati Quantum Computing Centre (AQCC) as anchor institution</li>
+                                <li>State Quantum Mission (SQM) committees</li>
+                                <li>Strategic partnerships with IBM, TCS, L&T</li>
+                            </ul>
+                        </div>
+                        <p><strong>Vision:</strong> Position Amaravati as India's Quantum Gateway and globally recognized hub for research, innovation, and applications.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-title">2. QUANTUM COMPUTING FUNDAMENTALS</div>
+                <div class="collapsible-icon">⋮</div>
+                <div class="collapsible-content">
+                    <div class="content-inner">
+                        <p><strong>Quantum Computing</strong> leverages quantum bits (qubits) with properties like superposition, entanglement, and quantum interference for exponential computational speedups.</p>
+                        <div class="key-points">
+                            <ul>
+                                <li><strong>Superposition:</strong> Qubits exist in multiple states simultaneously</li>
+                                <li><strong>Entanglement:</strong> Correlated qubits enable parallel computations</li>
+                                <li><strong>Key Algorithms:</strong> Shor's algorithm (factoring), Grover's algorithm (search)</li>
+                                <li><strong>Current Stage:</strong> NISQ (Noisy Intermediate-Scale Quantum)</li>
+                            </ul>
+                        </div>
+                        <p><strong>Applications Ready for Deployment:</strong> Drug discovery, material science, optimization, cryptography.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-title">3. GLOBAL QUANTUM LANDSCAPE & STRATEGIC APPLICATIONS</div>
+                <div class="collapsible-icon">⋮</div>
+                <div class="collapsible-content">
+                    <div class="content-inner">
+                        <p>Over 30 countries committed USD 40B+ in public investments. Leading quantum application areas:</p>
+                        <div class="key-points">
+                            <ul>
+                                <li><strong>Cryptography & Cybersecurity:</strong> QKD and post-quantum cryptography standards</li>
+                                <li><strong>AI & Machine Learning:</strong> VQE, QAOA for accelerated optimization</li>
+                                <li><strong>Healthcare & Pharma:</strong> IBM-Moderna RNA folding simulations for vaccine design</li>
+                                <li><strong>Materials Science:</strong> Quantum simulations for superconductors, catalysts, batteries</li>
+                                <li><strong>Energy & Climate:</strong> Grid simulation for renewable optimization</li>
+                                <li><strong>Sensing & Metrology:</strong> Atomic clocks, gravimeters, magnetometers reaching commercial maturity</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-title">4. NATIONAL QUANTUM MISSION (NQM) ALIGNMENT</div>
+                <div class="collapsible-icon">⋮</div>
+                <div class="collapsible-content">
+                    <div class="content-inner">
+                        <p><strong>NQM Outlay:</strong> INR 6,003.65 crore (2023-24 to 2030-31)</p>
+                        <div class="key-points">
+                            <ul>
+                                <li><strong>Compute:</strong> 20-50 qubits (3 yrs) → 50-100 (5 yrs) → 1,000 (8 yrs)</li>
+                                <li><strong>Communication:</strong> Satellite QKD (2,000 km), fiber QKD networks</li>
+                                <li><strong>Sensing:</strong> Atomic magnetometers, gravimeters, high-precision clocks</li>
+                                <li><strong>Materials:</strong> Advanced quantum devices for computing & communication</li>
+                            </ul>
+                        </div>
+                        <p><strong>T-Hubs:</strong> IISc Bangalore, IIT Madras, IIT Delhi, IIT Bombay spanning 14 groups across 17 states.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-title">5. INDIA'S QUANTUM MARKET POTENTIAL</div>
+                <div class="collapsible-icon">⋮</div>
+                <div class="collapsible-content">
+                    <div class="content-inner">
+                        <p><strong>Market Size:</strong> USD 1 billion (2024) → USD 7 billion (2032) at 27% CAGR</p>
+                        <div class="key-points">
+                            <ul>
+                                <li>Application Areas: Materials science, pharma, finance, cryptography, manufacturing, agriculture, aerospace</li>
+                                <li>Global Players: IBM, TCS, AWS actively collaborating in India</li>
+                                <li>Opportunity: Quantum-as-a-Service (QaaS) platforms for broad developer access</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-title">6. AMARAVATI QUANTUM VALLEY ECOSYSTEM</div>
+                <div class="collapsible-icon">⋮</div>
+                <div class="collapsible-content">
+                    <div class="content-inner">
+                        <p><strong>Anchor Institution:</strong> Amaravati Quantum Computing Centre (AQCC)</p>
+                        <div class="key-points">
+                            <ul>
+                                <li>State Quantum Mission (SQM) as nodal institution</li>
+                                <li>Apex Committee: Strategic guidance & policy direction</li>
+                                <li>Expert Committee: Technical oversight & operational recommendations</li>
+                                <li>Strategic MoUs: IBM, TCS, L&T for industry partnerships</li>
+                                <li>2035 Vision: Amaravati as world's lighthouse for deep technological progress</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-title">7. POLICY IMPLEMENTATION FRAMEWORK</div>
+                <div class="collapsible-icon">⋮</div>
+                <div class="collapsible-content">
+                    <div class="content-inner">
+                        <p><strong>Implementation Structure:</strong></p>
+                        <div class="key-points">
+                            <ul>
+                                <li>Apex Committee: Provides strategic oversight</li>
+                                <li>Expert Committee: Reviews all proposals & provides incentive recommendations</li>
+                                <li>SIPC (State Investment Promotion Committee): Final approval authority</li>
+                                <li>Operating Guidelines: Separate notification for implementation procedures</li>
+                                <li>Eligibility: Comprehensive definitions & stakeholder requirements</li>
+                                <li>Policy Period: 5 years from notification (valid 2025-2030)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INCENTIVES TAB -->
+        <section id="tab-2">
+            <h2 class="section-title">💰 Comprehensive Incentive Program</h2>
+            
+            <div class="subsection-title">1️⃣ Startups</div>
+            <div class="incentive-category">
+                <h4>Startup Development & Growth Support</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">Startup Grants (Phase-wise)</div>
+                        <div class="value">Up to INR 30 Lakhs</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Matching Grants (vs GoI)</div>
+                        <div class="value">1:1 matching up to INR 30L</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Seed Funding with Equity</div>
+                        <div class="value">Up to INR 1 Crore</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Go-to-Market Support</div>
+                        <div class="value">Up to INR 5 Crore</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="incentive-category">
+                <h4>Events & Professional Development</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">Event Sponsorship</div>
+                        <div class="value">75% reimburse, max INR 10L</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">International Events</div>
+                        <div class="value">1 event, Domestic 2 events</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Accelerator Programs</div>
+                        <div class="value">75%, max INR 4L per program</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Program Frequency</div>
+                        <div class="value">Max 2 programs per startup</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="incentive-category">
+                <h4>Intellectual Property & Infrastructure</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">Patent Filing (Domestic)</div>
+                        <div class="value">75% reimburse, max INR 4L</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Patent Filing (International)</div>
+                        <div class="value">75% reimburse, max INR 20L</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Rental Subsidy</div>
+                        <div class="value">100% for 20 employees</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Quantum Facility Access</div>
+                        <div class="value">Subsidized/Free AQCC access</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection-title">2️⃣ Academic Projects</div>
+            <div class="incentive-category">
+                <h4>Research & Development Support</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">Academic Grants (Phase-wise)</div>
+                        <div class="value">Up to INR 30 Lakhs</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Matching Grants (vs GoI)</div>
+                        <div class="value">1:1 matching up to INR 30L</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Accelerator Programs</div>
+                        <div class="value">75%, max INR 4L per program</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Patent Support</div>
+                        <div class="value">Domestic: 4L, International: 20L</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="incentive-category">
+                <h4>Workspace & Facility Benefits</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">Rental Subsidy</div>
+                        <div class="value">100% for 50 employees</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Collaboration Scope</div>
+                        <div class="value">Any Indian/Foreign university</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Requirement</div>
+                        <div class="value">Co-collaboration with AP institutions</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">AQCC Access</div>
+                        <div class="value">Subsidized/Free facility usage</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection-title">3️⃣ Hardware & Component Manufacturers</div>
+            <div class="incentive-category">
+                <h4>Capital & Industrial Incentives</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">Early Bird Capital Subsidy (First 10)</div>
+                        <div class="value">50% subsidy, <INR 50Cr investment</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Regular Capital Subsidy</div>
+                        <div class="value">30% subsidy, <INR 50Cr investment</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Subsidy Payment</div>
+                        <div class="value">Early: 2 yrs, Regular: 5 yrs</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Land Discount</div>
+                        <div class="value">Variable, case-by-case basis</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="incentive-category">
+                <h4>Operational Support</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">Power Subsidy</div>
+                        <div class="value">INR 1/unit for 5 years</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Stamp Duty Subsidy</div>
+                        <div class="value">100% Reimbursement</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">SGST Subsidy</div>
+                        <div class="value">100% for 5 years from production</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Cumulative Cap</div>
+                        <div class="value">50% of investment max</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="incentive-category">
+                <h4>Mega Projects (>INR 50 Crores)</h4>
+                <div class="detail-item" style="width: 100%;">
+                    <div class="label">Customized Incentive Package</div>
+                    <div class="value">Case-by-case negotiation post EC-SQM review</div>
+                </div>
+            </div>
+
+            <div class="subsection-title">4️⃣ Quantum Applications Firms</div>
+            <div class="incentive-category">
+                <h4>Eligibility & Workspace Support</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">Minimum Revenue</div>
+                        <div class="value">>INR 10 Crores OR >INR 10Cr Funding</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Rental Subsidy</div>
+                        <div class="value">75%, max INR 10K/seat/month</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Subsidy Duration</div>
+                        <div class="value">5 years in Notified Area</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="incentive-category">
+                <h4>Technology & Talent Investment</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">IT Hardware CAPEX</div>
+                        <div class="value">50% reimburse, max INR 10Cr</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Quantum Hardware Import Duty</div>
+                        <div class="value">50% for first 20 approved firms</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Highly Skilled Talent CTC</div>
+                        <div class="value">50% up to INR 6L/month, 12 months</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Local AP Talent CTC</div>
+                        <div class="value">50% up to INR 1L/month, 12 months</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="incentive-category">
+                <h4>Facility Access & Growth Support</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">Power Subsidy</div>
+                        <div class="value">INR 1/unit discount, 5 years</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">AQCC Facility Access</div>
+                        <div class="value">Subsidized nominal charges</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">HPC Facility Access</div>
+                        <div class="value">When facility established</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">High Employment Bonus</div>
+                        <div class="value">Tailor-made package for 100+ jobs</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection-title">5️⃣ High Performance Computing (HPC) Facilities</div>
+            <div class="incentive-category">
+                <h4>HPC Deployment & Support</h4>
+                <div class="incentive-details">
+                    <div class="detail-item">
+                        <div class="label">Maximum HPC Facilities Supported</div>
+                        <div class="value">Up to 4 facilities/projects</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Capital Subsidy</div>
+                        <div class="value">50% IT Hardware reimbursement</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Land Incentive</div>
+                        <div class="value">Discount in Quantum Hardware Park</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Power Subsidy</div>
+                        <div class="value">INR 1/unit in Notified Area</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CALCULATOR TAB -->
+        <section id="tab-3">
+            <h2 class="section-title">🧮 Incentive Eligibility & Benefit Calculator</h2>
+            <p style="color: #666; margin-bottom: 20px; font-size: 15px;">Calculate your potential incentives based on your organization type and project details.</p>
+
+            <div class="calculator-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="org-type">Organization Type *</label>
+                        <select id="org-type" onchange="updateCalculator()">
+                            <option value="">-- Select Type --</option>
+                            <option value="startup">Startup (Incubated)</option>
+                            <option value="academic">Academic Institution/Project</option>
+                            <option value="hardware">Hardware & Component Manufacturer</option>
+                            <option value="applications">Quantum Applications Firm</option>
+                            <option value="hpc">HPC Facility Provider</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-stage">Project Stage *</label>
+                        <select id="project-stage" onchange="updateCalculator()">
+                            <option value="">-- Select Stage --</option>
+                            <option value="concept">Concept/POC</option>
+                            <option value="development">Product Development</option>
+                            <option value="scaling">Scaling & Growth</option>
+                            <option value="commercial">Commercial Production</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="investment">Total Investment (INR Crores) *</label>
+                        <input type="number" id="investment" min="0" step="0.5" placeholder="e.g., 25" onchange="updateCalculator()" />
+                    </div>
+                    <div class="form-group">
+                        <label for="employees">Expected Employees in AP</label>
+                        <input type="number" id="employees" min="0" step="1" placeholder="e.g., 50" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sector">Application Sector</label>
+                        <select id="sector">
+                            <option value="">-- Select Sector --</option>
+                            <option value="cryptography">Cryptography & Cybersecurity</option>
+                            <option value="ai">AI & Machine Learning</option>
+                            <option value="pharma">Healthcare & Pharma</option>
+                            <option value="materials">Materials Science</option>
+                            <option value="energy">Energy & Climate</option>
+                            <option value="sensing">Sensing & Metrology</option>
+                            <option value="other">Other/Multi-sector</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="timeline">Project Timeline (Months)</label>
+                        <input type="number" id="timeline" min="6" max="60" step="6" placeholder="e.g., 24" />
+                    </div>
+                </div>
+
+                <button onclick="calculateIncentives()" class="btn-primary" style="width: 100%; padding: 15px; font-size: 16px; margin-top: 20px;">Calculate Incentives</button>
+
+                <div id="results" class="results-box">
+                    <h3>📊 Your Incentive Package</h3>
+                    <div id="results-content"></div>
+                    <button onclick="downloadResults()" class="download-btn" style="width: 100%; margin-top: 20px;">📥 Download Report</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMELINE TAB -->
+        <section id="tab-4">
+            <h2 class="section-title">📅 Strategic Roadmap 2025-2030</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">2025</div>
+                    <div class="timeline-content">
+                        <h4>Foundational Year - Infrastructure & Governance</h4>
+                        <p><strong>Q1-Q2:</strong> Policy notification and operating guidelines. Apex & Expert Committee operationalization.</p>
+                        <p><strong>Q2-Q3:</strong> First quantum computer deployment (Superconducting architecture). Quantum Valley Towers and Hardware Park site preparation.</p>
+                        <p><strong>Targets:</strong> 100-200 qubits deployed, 10 startups supported, 5 universities activated</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">2026</div>
+                    <div class="timeline-content">
+                        <h4>Acceleration - Ecosystem Build-out</h4>
+                        <p><strong>Q1-Q2:</strong> Second quantum computer deployment (Trapped Ions). Hardware manufacturing begins.</p>
+                        <p><strong>Q2-Q4:</strong> Quantum Valley Towers operational. First cohort of 20-30 startups onboarded.</p>
+                        <p><strong>Targets:</strong> 500-800 qubits, 20 startups, 10 universities, INR 200Cr investment</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">2027</div>
+                    <div class="timeline-content">
+                        <h4>Scaling - Supply Chain & Talent</h4>
+                        <p><strong>Q1-Q2:</strong> Third quantum computer deployment (Photonics). Hardware Park fully operational.</p>
+                        <p><strong>Q2-Q4:</strong> 2,000+ specialists trained. 50+ startups operational. International partnerships deepened.</p>
+                        <p><strong>Targets:</strong> 1,500 qubits, 50 startups, 15 universities, INR 500Cr investment, 1,000+ trained talent</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">2028</div>
+                    <div class="timeline-content">
+                        <h4>Maturation - Market Leadership</h4>
+                        <p><strong>Q1-Q3:</strong> HPC facilities operational. First quantum applications going commercial.</p>
+                        <p><strong>Q3-Q4:</strong> 75 startups operational. INR 5,000 crore export ecosystem development begins.</p>
+                        <p><strong>Targets:</strong> 2,200 qubits, 75 startups, 18 universities, INR 750Cr investment, 3,000+ trained</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">2029</div>
+                    <div class="timeline-content">
+                        <h4>Excellence - Global Hub Status</h4>
+                        <p><strong>Q1-Q2:</strong> Advanced quantum architectures operational. Supply chain maturity achieved.</p>
+                        <p><strong>Q2-Q4:</strong> 90+ startups fully operational. Export revenue exceeding INR 2,000 crore annually.</p>
+                        <p><strong>Targets:</strong> 2,800 qubits, 90 startups, 20 universities, USD 750M+ investment, 4,500+ specialists</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">2030</div>
+                    <div class="timeline-content">
+                        <h4>Achievement - Vision Realized</h4>
+                        <p><strong>Q1-Q4:</strong> Complete quantum ecosystem operational. Export target of INR 5,000 crore achieved.</p>
+                        <p><strong>Global Recognition:</strong> Amaravati recognized as world-class quantum innovation hub.</p>
+                        <p><strong>Final Targets:</strong> 3,000 qubits across 3 technologies, 100+ startups, 20 universities, USD 1B+ total investment, 5,000+ quantum specialists</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 40px;">🎯 Key Performance Indicators</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>KPI</th>
+                        <th>2025</th>
+                        <th>2026</th>
+                        <th>2027</th>
+                        <th>2028</th>
+                        <th>2029</th>
+                        <th>2030</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total Qubits Deployed</strong></td>
+                        <td>100-200</td>
+                        <td>500-800</td>
+                        <td>1,500</td>
+                        <td>2,200</td>
+                        <td>2,800</td>
+                        <td>3,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quantum Startups</strong></td>
+                        <td>10</td>
+                        <td>30</td>
+                        <td>50</td>
+                        <td>75</td>
+                        <td>90</td>
+                        <td>100+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Universities Engaged</strong></td>
+                        <td>5</td>
+                        <td>10</td>
+                        <td>15</td>
+                        <td>18</td>
+                        <td>20</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Investment Attracted (INR Cr)</strong></td>
+                        <td>50</td>
+                        <td>200</td>
+                        <td>500</td>
+                        <td>750</td>
+                        <td>1,500</td>
+                        <td>3,500+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Specialists Trained</strong></td>
+                        <td>200</td>
+                        <td>800</td>
+                        <td>2,000</td>
+                        <td>3,000</td>
+                        <td>4,500</td>
+                        <td>5,000+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annual Export Revenue (INR Cr)</strong></td>
+                        <td>0</td>
+                        <td>50</td>
+                        <td>300</td>
+                        <td>800</td>
+                        <td>2,000</td>
+                        <td>5,000+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- STAKEHOLDERS TAB -->
+        <section id="tab-5">
+            <h2 class="section-title">🏛️ Stakeholder Ecosystem</h2>
+
+            <div class="subsection-title">Government Entities</div>
+            <div class="stakeholder-card">
+                <h4>Andhra Pradesh State Quantum Mission (SQM)</h4>
+                <div class="role">Apex Coordinating Body</div>
+                <div class="description">Plans, coordinates, and executes quantum-related programs. Oversees quantum valley development and guides strategic integration of research, education, innovation, industry collaboration, infrastructure creation, and policy formulation.</div>
+            </div>
+
+            <div class="stakeholder-card">
+                <h4>Amaravati Quantum Computing Centre (AQCC)</h4>
+                <div class="role">Anchor Institution</div>
+                <div class="description">Government company established under Companies Act 2013. Serves as the nucleus for positioning AP as a global hub in quantum technologies. Houses quantum hardware, enables research infrastructure, and facilitates technology transfer.</div>
+            </div>
+
+            <div class="stakeholder-card">
+                <h4>Apex Committee</h4>
+                <div class="role">Strategic Leadership</div>
+                <div class="description">Provides strategic guidance and policy direction. Members include senior government officials, industry leaders, and academic experts. Meets quarterly to review strategic progress and policy adaptation.</div>
+            </div>
+
+            <div class="stakeholder-card">
+                <h4>Expert Committee</h4>
+                <div class="role">Technical Oversight</div>
+                <div class="description">Reviews all project proposals and provides recommendations for incentive approval. Assesses technical feasibility, commercial viability, and alignment with policy objectives. Reports to Apex Committee and SIPC.</div>
+            </div>
+
+            <div class="subsection-title">Industry Partners</div>
+            <div class="stakeholder-card">
+                <h4>IBM</h4>
+                <div class="role">Technology Partner</div>
+                <div class="description">MoU signed for deploying quantum computing infrastructure. Provides access to IBM Quantum systems and expertise. Supports developer training and quantum application development.</div>
+            </div>
+
+            <div class="stakeholder-card">
+                <h4>Tata Consultancy Services (TCS)</h4>
+                <div class="role">Industry Collaboration & Applications</div>
+                <div class="description">Strategic partner for quantum applications development. Focuses on enterprise solutions, consulting services, and talent development. Bridges quantum research with industry needs.</div>
+            </div>
+
+            <div class="stakeholder-card">
+                <h4>Larsen & Toubro (L&T)</h4>
+                <div class="role">Infrastructure & Engineering</div>
+                <div class="description">Partner for Quantum Valley Tech Park infrastructure development. Provides engineering expertise for cryogenic facilities, optical systems, and quantum hardware manufacturing infrastructure.</div>
+            </div>
+
+            <div class="subsection-title">Academic Institutions</div>
+            <div class="stakeholder-card">
+                <h4>IIT Madras, IIT Delhi, IIT Bombay, IISc Bangalore</h4>
+                <div class="role">National Quantum Mission T-Hubs</div>
+                <div class="description">Lead quantum research, education, and entrepreneurship. Coordinate 14 research groups across 17 states. Focus on fundamental research to commercialization pipeline.</div>
+            </div>
+
+            <div class="stakeholder-card">
+                <h4>AP Universities (20 targeted)</h4>
+                <div class="role">Talent Development</div>
+                <div class="description">Establish undergraduate, postgraduate, and PhD programs in quantum technology. Conduct research projects eligible for AQCC facility access and incentive support.</div>
+            </div>
+
+            <div class="subsection-title">Support Organizations</div>
+            <div class="stakeholder-card">
+                <h4>APIIC Ltd (AP Industrial Infrastructure Corporation)</h4>
+                <div class="role">Land & Infrastructure Provider</div>
+                <div class="description">Manages Quantum Valley Towers and Hardware Park. Provides subsidized land, utilities (power, water, connectivity), and common facilities for tenants.</div>
+            </div>
+
+            <div class="stakeholder-card">
+                <h4>APSSDC (Andhra Pradesh State Skill Development Corporation)</h4>
+                <div class="role">Skill Development Implementation</div>
+                <div class="description">Builds skilled workforce in quantum computing. Develops curriculum, coordinates training programs, and certifies professionals in quantum hardware, software, and applications.</div>
+            </div>
+
+            <div class="stakeholder-card">
+                <h4>APCRDA (Amaravati Capital Region Development Authority)</h4>
+                <div class="role">Urban Development Coordination</div>
+                <div class="description">Coordinates city-level development for quantum valley infrastructure. Ensures integrated urban planning aligned with technology park requirements.</div>
+            </div>
+        </section>
+
+        <!-- CASE STUDIES TAB -->
+        <section id="tab-5">
+            <h2 class="section-title">📖 Real-World Success Cases</h2>
+            
+            <div class="subsection-title">Indian Quantum Startups Leading the Charge</div>
+            
+            <div class="case-study-card">
+                <div class="case-header">
+                    <h3>QpiAI - India's First Indigenous 8-Qubit Quantum Computer</h3>
+                    <span class="badge badge-success">LIVE DEPLOYMENT</span>
+                </div>
+                <div class="case-body">
+                    <p><strong>Achievement:</strong> Deployed India's first indigenously built quantum computer in Andhra Pradesh (November 2025)</p>
+                    <div class="case-details">
+                        <div class="detail">
+                            <strong>Technology:</strong> 8-qubit indigenous quantum system
+                        </div>
+                        <div class="detail">
+                            <strong>Founder:</strong> Nagendra Nagarajan (Deep Tech entrepreneur)
+                        </div>
+                        <div class="detail">
+                            <strong>Backing:</strong> National Quantum Mission, DST, ISRO, IIT Tirupati
+                        </div>
+                        <div class="detail">
+                            <strong>Use Cases:</strong> Precision farming, smart water management, rural healthcare diagnostics
+                        </div>
+                    </div>
+                    <p class="impact"><strong>Market Impact:</strong> Solving real Indian problems with practical quantum computing—not just lab prototypes. Targeting 2 million+ farmers and rural communities.</p>
+                    <p style="color: #666; font-size: 13px; margin-top: 10px;">✓ Focus: Production-ready systems for agriculture & healthcare | ✓ Scalability: Path to 50+ qubits by 2027 | ✓ Export Potential: Southeast Asian markets</p>
+                </div>
+            </div>
+
+            <div class="case-study-card">
+                <div class="case-header">
+                    <h3>BosonQ Psi - Quantum Chemistry for Pharma</h3>
+                    <span class="badge badge-primary">SCALING</span>
+                </div>
+                <div class="case-body">
+                    <p><strong>Achievement:</strong> Breakthrough in quantum drug discovery and computational fluid dynamics</p>
+                    <div class="case-details">
+                        <div class="detail">
+                            <strong>Major Win:</strong> Jet engine CFD simulation with 30 logical qubits (vs 19.2M classical cores needed)
+                        </div>
+                        <div class="detail">
+                            <strong>Reduction:</strong> 99.99% reduction in computational resource requirements
+                        </div>
+                        <div class="detail">
+                            <strong>Platform:</strong> BQPhy™ - Quantum-powered cloud simulation for enterprises
+                        </div>
+                        <div class="detail">
+                            <strong>Target Industries:</strong> Aerospace, automotive, pharma, energy
+                        </div>
+                    </div>
+                    <p class="impact"><strong>Market Impact:</strong> Quantum advantage demonstrated in real engineering problems. Turning point for industry adoption of quantum computing.</p>
+                    <p style="color: #666; font-size: 13px; margin-top: 10px;">✓ Revenue: >USD 10M+ in early contracts | ✓ Timeline: Commercial applications 2025-2026 | ✓ AP Opportunity: Pharma applications hub</p>
+                </div>
+            </div>
+
+            <div class="case-study-card">
+                <div class="case-header">
+                    <h3>Q-CTRL - World-First Commercial Quantum Advantage in GPS-Denied Navigation</h3>
+                    <span class="badge badge-success">REVENUE GENERATING</span>
+                </div>
+                <div class="case-body">
+                    <p><strong>Achievement:</strong> Delivered first true commercial quantum advantage with 50-100X performance improvement in navigation</p>
+                    <div class="case-details">
+                        <div class="detail">
+                            <strong>Technology:</strong> Quantum sensors + AI-for-Quantum software (Fire Opal)
+                        </div>
+                        <div class="detail">
+                            <strong>Recognition:</strong> TIME Magazine's Best Innovations of 2025
+                        </div>
+                        <div class="detail">
+                            <strong>Revenue:</strong> >USD 50M in sales & contract wins (2025)
+                        </div>
+                        <div class="detail">
+                            <strong>Use Case:</strong> GPS-free navigation for defense, aerospace, remote operations
+                        </div>
+                    </div>
+                    <p class="impact"><strong>Market Impact:</strong> Demonstrated quantum technology can solve real defense & strategic challenges today. Catalyzing government & enterprise adoption.</p>
+                    <p style="color: #666; font-size: 13px; margin-top: 10px;">✓ Commercial Stage: Revenue-generating operations | ✓ Defense Relevance: Strategic advantage | ✓ AP Role: Defense applications hub</p>
+                </div>
+            </div>
+
+            <div class="case-study-card">
+                <div class="case-header">
+                    <h3>IBM-TCS Collaboration - India's Largest Quantum System</h3>
+                    <span class="badge badge-warning">OPERATIONALIZING</span>
+                </div>
+                <div class="case-body">
+                    <p><strong>Achievement:</strong> IBM Quantum System Two (156 qubits) deployed at Amaravati Quantum Valley Tech Park</p>
+                    <div class="case-details">
+                        <div class="detail">
+                            <strong>Hardware:</strong> 156-qubit IBM Quantum System Two (most powerful in India)
+                        </div>
+                        <div class="detail">
+                            <strong>Timeline:</strong> Operational by January 1, 2026
+                        </div>
+                        <div class="detail">
+                            <strong>TCS Focus:</strong> Quantum algorithms for healthcare, materials science, cryptography, supply chain
+                        </div>
+                        <div class="detail">
+                            <strong>Target:</strong> 100 use cases of Quantum-AI applications by August 2026
+                        </div>
+                    </div>
+                    <p class="impact"><strong>Market Impact:</strong> Bridging research-to-production gap. Creating replicable quantum-as-a-service ecosystem for Indian enterprises.</p>
+                    <p style="color: #666; font-size: 13px; margin-top: 10px;">✓ Enterprise Focus: Practical industry solutions | ✓ Scale: Open access for 20+ AP startups | ✓ Training: 1,000+ developers annually</p>
+                </div>
+            </div>
+
+            <div class="case-study-card">
+                <div class="case-header">
+                    <h3>Approved AP Quantum Projects (7 Initial Approvals)</h3>
+                    <span class="badge badge-primary">APPROVED FOR SETUP</span>
+                </div>
+                <div class="case-body">
+                    <p><strong>Achievement:</strong> First batch of 7 quantum technology projects approved under Policy 2025-30</p>
+                    <div class="case-details">
+                        <div class="detail">
+                            <strong>Qclairvoyance Quantum Labs:</strong> Hardware & quantum software development
+                        </div>
+                        <div class="detail">
+                            <strong>Centella Scientific:</strong> Quantum drug discovery platform
+                        </div>
+                        <div class="detail">
+                            <strong>Cybranex Technologies:</strong> Post-quantum cryptography solutions
+                        </div>
+                        <div class="detail">
+                            <strong>Qubitech Smart Solutions:</strong> Quantum applications for optimization
+                        </div>
+                        <div class="detail">
+                            <strong>FortyTwo42 Technology:</strong> Education & STEM quantum initiatives
+                        </div>
+                        <div class="detail">
+                            <strong>Nostradamus Technologies:</strong> Quantum predictive analytics
+                        </div>
+                        <div class="detail">
+                            <strong>QpiAI India:</strong> Quantum hardware manufacturing
+                        </div>
+                    </div>
+                    <p class="impact"><strong>Local Catalyst:</strong> Demonstrates policy's immediate activation. Creating 200+ high-value jobs in first cohort alone.</p>
+                    <p style="color: #666; font-size: 13px; margin-top: 10px;">✓ Combined Investment: INR 150+ Crores | ✓ Timeline: Setup by Q3 2026 | ✓ Incentives: INR 75+ Crores approved</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">🔬 Global Reference Cases</h2>
+
+            <div class="case-study-card">
+                <div class="case-header">
+                    <h3>Volkswagen & BMW - Quantum for Manufacturing Optimization</h3>
+                    <span class="badge badge-primary">ENTERPRISE</span>
+                </div>
+                <div class="case-body">
+                    <p><strong>Application:</strong> Quantum algorithms for traffic optimization & production scheduling</p>
+                    <div class="case-details">
+                        <div class="detail">
+                            <strong>Volkswagen:</strong> Quantum city traffic optimization reducing congestion & emissions
+                        </div>
+                        <div class="detail">
+                            <strong>BMW:</strong> Manufacturing coordination across 1000+ robots in global factories
+                        </div>
+                        <div class="detail">
+                            <strong>Impact:</strong> 5-15% efficiency improvements = hundreds of millions in savings
+                        </div>
+                    </div>
+                    <p class="impact"><strong>AP Relevance:</strong> Model for targeting Indian automotive & logistics sector with quantum optimization solutions</p>
+                </div>
+            </div>
+
+            <div class="case-study-card">
+                <div class="case-header">
+                    <h3>IBM-Moderna - Quantum for RNA Folding</h3>
+                    <span class="badge badge-success">VACCINE ACCELERATION</span>
+                </div>
+                <div class="case-body">
+                    <p><strong>Breakthrough:</strong> Simulated RNA folding using 80 qubits to accelerate vaccine design</p>
+                    <div class="case-details">
+                        <div class="detail">
+                            <strong>Method:</strong> Quantum simulation of molecular interactions
+                        </div>
+                        <div class="detail">
+                            <strong>Impact:</strong> Vaccine development cycles shortened from 8+ years to 2-3 years potential
+                        </div>
+                        <div class="detail">
+                            <strong>Sector:</strong> Pharmaceutical R&D for infectious diseases
+                        </div>
+                    </div>
+                    <p class="impact"><strong>AP Opportunity:</strong> Partner with pharma cluster (Hyderabad) for quantum drug discovery hub. 100+ drug candidates in pipeline.</p>
+                </div>
+            </div>
+
+            <div class="case-study-card">
+                <div class="case-header">
+                    <h3>Mercedes-Benz & IBM - Quantum Battery Chemistry</h3>
+                    <span class="badge badge-warning">MATERIALS SCIENCE</span>
+                </div>
+                <div class="case-body">
+                    <p><strong>Focus:</strong> Simulating battery materials to improve EV range and charging</p>
+                    <div class="case-details">
+                        <div class="detail">
+                            <strong>Goal:</strong> Discover new battery chemistries with 40% improved performance
+                        </div>
+                        <div class="detail">
+                            <strong>Timeline:</strong> First quantum-designed battery prototypes by 2027
+                        </div>
+                        <div class="detail">
+                            <strong>Market:</strong> USD 500B+ EV battery industry
+                        </div>
+                    </div>
+                    <p class="impact"><strong>AP Angle:</strong> Position for India's emerging EV manufacturing ecosystem with quantum materials R&D</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUCCESS METRICS TAB -->
+        <section id="tab-6">
+            <h2 class="section-title">📊 Success Metrics & Performance Tracking</h2>
+            
+            <div class="key-points" style="margin-bottom: 30px;">
+                <p><strong>Real-time KPI Dashboard:</strong> Quarterly progress reports published by Amaravati Quantum Valley Mission Board. Track adoption, investment, talent development, and technology advancement against 2030 targets.</p>
+            </div>
+
+            <div class="metrics-grid" style="margin-bottom: 40px;">
+                <div class="metric card" style="border-left: 5px solid #2ecc71;">
+                    <div class="metric-label">ADOPTION RATE</div>
+                    <div class="metric-value" style="color: #2ecc71;">95%</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 10px;">Target by 2030: Ecosystem participation rate</div>
+                </div>
+                <div class="metric card" style="border-left: 5px solid #0066cc;">
+                    <div class="metric-label">QUANTUM STARTUPS</div>
+                    <div class="metric-value" style="color: #0066cc;">100+</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 10px;">Funded & operational by 2030</div>
+                </div>
+                <div class="metric card" style="border-left: 5px solid #f39c12;">
+                    <div class="metric-label">INVESTMENT ATTRACTED</div>
+                    <div class="metric-value" style="color: #f39c12;">USD 1B+</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 10px;">Total capital inflow by 2030</div>
+                </div>
+                <div class="metric card" style="border-left: 5px solid #00d4ff;">
+                    <div class="metric-label">HIGH-VALUE JOBS</div>
+                    <div class="metric-value" style="color: #00d4ff;">7,500+</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 10px;">Created in quantum ecosystem by 2030</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Year-by-Year Performance Targets</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>KPI</th>
+                        <th>2025</th>
+                        <th>2026</th>
+                        <th>2027</th>
+                        <th>2028</th>
+                        <th>2029</th>
+                        <th>2030</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Ecosystem Adoption (%)</strong></td>
+                        <td><span class="badge badge-warning">15%</span></td>
+                        <td><span class="badge badge-primary">35%</span></td>
+                        <td><span class="badge badge-primary">55%</span></td>
+                        <td><span class="badge badge-success">72%</span></td>
+                        <td><span class="badge badge-success">85%</span></td>
+                        <td><span class="badge badge-success">95%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quantum Startups</strong></td>
+                        <td><span class="badge badge-warning">10</span></td>
+                        <td><span class="badge badge-primary">30</span></td>
+                        <td><span class="badge badge-primary">50</span></td>
+                        <td><span class="badge badge-success">75</span></td>
+                        <td><span class="badge badge-success">90</span></td>
+                        <td><span class="badge badge-success">105</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Investment (USD Millions)</strong></td>
+                        <td><span class="badge badge-warning">50</span></td>
+                        <td><span class="badge badge-primary">200</span></td>
+                        <td><span class="badge badge-primary">500</span></td>
+                        <td><span class="badge badge-success">800</span></td>
+                        <td><span class="badge badge-success">1,500</span></td>
+                        <td><span class="badge badge-success">3,500+</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>High-Value Jobs</strong></td>
+                        <td><span class="badge badge-warning">200</span></td>
+                        <td><span class="badge badge-primary">800</span></td>
+                        <td><span class="badge badge-primary">2,000</span></td>
+                        <td><span class="badge badge-success">3,500</span></td>
+                        <td><span class="badge badge-success">5,000</span></td>
+                        <td><span class="badge badge-success">7,500+</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Research Publications</strong></td>
+                        <td><span class="badge badge-warning">12</span></td>
+                        <td><span class="badge badge-primary">45</span></td>
+                        <td><span class="badge badge-primary">120</span></td>
+                        <td><span class="badge badge-success">250</span></td>
+                        <td><span class="badge badge-success">400</span></td>
+                        <td><span class="badge badge-success">600+</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Technology Maturity (1-10)</strong></td>
+                        <td><span class="badge badge-warning">3.0</span></td>
+                        <td><span class="badge badge-primary">4.5</span></td>
+                        <td><span class="badge badge-primary">6.0</span></td>
+                        <td><span class="badge badge-success">7.5</span></td>
+                        <td><span class="badge badge-success">8.5</span></td>
+                        <td><span class="badge badge-success">9.0</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annual Export Revenue (INR Crores)</strong></td>
+                        <td><span class="badge badge-warning">0</span></td>
+                        <td><span class="badge badge-primary">50</span></td>
+                        <td><span class="badge badge-primary">300</span></td>
+                        <td><span class="badge badge-success">800</span></td>
+                        <td><span class="badge badge-success">2,000</span></td>
+                        <td><span class="badge badge-success">5,000+</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">Success Factor Analysis</h3>
+            <div class="grid">
+                <div class="card">
+                    <h3>🎯 Infrastructure Readiness</h3>
+                    <p class="description">Quantum Valley Towers operational, Hardware Park fully functional, cryogenic labs ready, 24/7 utility support ensuring startups can scale from day one.</p>
+                    <div style="margin-top: 15px; padding: 12px; background: #f0f7ff; border-radius: 6px; font-size: 13px; color: #0066cc; font-weight: 600;">✓ On Track: 90 Lakh sq.ft. operational by Q2 2026</div>
+                </div>
+                <div class="card">
+                    <h3>👥 Talent Pipeline</h3>
+                    <p class="description">20 universities offering quantum programs, APSSDC certified training, international expertise from IBM/TCS, creating 5,000+ specialists by 2030.</p>
+                    <div style="margin-top: 15px; padding: 12px; background: #f0f7ff; border-radius: 6px; font-size: 13px; color: #0066cc; font-weight: 600;">✓ On Track: 800 trained by end 2026</div>
+                </div>
+                <div class="card">
+                    <h3>💰 Funding Ecosystem</h3>
+                    <p class="description">INR 30-500 crore incentive packages per startup, VC interest increasing, government co-investment reducing capital risk for early ventures.</p>
+                    <div style="margin-top: 15px; padding: 12px; background: #f0f7ff; border-radius: 6px; font-size: 13px; color: #0066cc; font-weight: 600;">✓ On Track: INR 200+ Cr deployed 2025</div>
+                </div>
+                <div class="card">
+                    <h3>🌍 Global Connectivity</h3>
+                    <p class="description">MoUs with IBM, TCS, L&T, international research partnerships, access to 156-qubit systems, positioning AP as Asia-Pacific hub.</p>
+                    <div style="margin-top: 15px; padding: 12px; background: #f0f7ff; border-radius: 6px; font-size: 13px; color: #0066cc; font-weight: 600;">✓ On Track: 100+ partnerships by 2027</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Risk Monitoring & Mitigation</h3>
+            <div class="key-points">
+                <ul>
+                    <li><strong>Talent Shortage Risk:</strong> Quarterly upskilling targets, tie-ups with IITs/Stanford, remote work policies attracting global talent</li>
+                    <li><strong>Technology Obsolescence:</strong> Expert Committee reviews quarterly, pivot flexibility built into incentives for startups</li>
+                    <li><strong>Investment Volatility:</strong> Government co-investment protects ecosystem, diversified investor base (VC, PE, corporate)</li>
+                    <li><strong>Global Competition:</strong> First-mover advantage in manufacturing + applications + talent being leveraged strategically</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- INVESTOR PROSPECTUS TAB -->
+        <section id="tab-7">
+            <h2 class="section-title">💼 Investor Prospectus & Opportunity Brief</h2>
+            
+            <div class="hero">
+                <h1>Amaravati Quantum Valley: Investment Opportunity 2025-2030</h1>
+                <p>A USD 1 Billion+ ecosystem development initiative positioning Andhra Pradesh as the world's leading quantum technology hub outside Silicon Valley.</p>
+            </div>
+
+            <h3 class="subsection-title">Executive Summary</h3>
+            <div class="card" style="border-left: 5px solid #0066cc;">
+                <div style="line-height: 1.8; color: #555; font-size: 15px;">
+                    <p><strong>Vision:</strong> Transform Amaravati into a globally recognized quantum computing hub driving innovation, creating high-value employment, and establishing India as a quantum technology powerhouse.</p>
+                    <p><strong>Investment Horizon:</strong> 2025-2030 (5-year focused development) with 10+ year commercial runway</p>
+                    <p><strong>Target Quantum Market:</strong> USD 7 billion (India) by 2032 | USD 72 billion (Global) by 2035</p>
+                    <p><strong>Early-Mover Advantage:</strong> Only 3 recognized quantum hubs globally—establish regional monopoly in Asia-Pacific</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Market Opportunity Sizing</h3>
+            <div class="grid">
+                <div class="card">
+                    <h3>Global Quantum Market 2025-2035</h3>
+                    <div class="stat" style="color: #f39c12;">USD 97B</div>
+                    <div class="label">Total Revenue Potential by 2035</div>
+                    <p class="description" style="margin-top: 15px;">McKinsey research: Quantum computing (USD 72B), quantum communication (USD 18B), quantum sensing (USD 7B)</p>
+                </div>
+                <div class="card">
+                    <h3>India Quantum Market 2024-2032</h3>
+                    <div class="stat" style="color: #2ecc71;">USD 7B</div>
+                    <div class="label">Projected Market by 2032</div>
+                    <p class="description" style="margin-top: 15px;">27% CAGR | Applications: Pharma, Materials, Finance, Cryptography, Agriculture, Aerospace</p>
+                </div>
+                <div class="card">
+                    <h3>AP Quantum Valley TAM (Total Addressable Market)</h3>
+                    <div class="stat" style="color: #00d4ff;">USD 500M+</div>
+                    <div class="label">Capturing 7-10% of India Market by 2030</div>
+                    <p class="description" style="margin-top: 15px;">Manufacturing (INR 5,000Cr exports), Startups (100+ entities), Applications (Multi-sector)</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Revenue Streams for Investors</h3>
+            <div class="incentive-category">
+                <h4>1. Hardware Manufacturing & Sales</h4>
+                <p style="margin: 10px 0; color: #555;">Qubit platform production, cryo-electronics, photonic packages, quantum sensors, readout hardware</p>
+                <div class="detail-item">
+                    <div class="label">INR 5,000 Crore Annual Export Target by 2030</div>
+                    <div class="value">Gross Margin: 40-50% | Tax benefits: 100% SGST reimbursement for 5 years</div>
+                </div>
+                <div class="detail-item">
+                    <div class="label">Capital Subsidy: 30-50% investment reimbursement</div>
+                    <div class="value">Power subsidy: INR 1/unit for 5 years | Land discount: Up to 60%</div>
+                </div>
+            </div>
+
+            <div class="incentive-category">
+                <h4>2. Quantum Applications & SaaS</h4>
+                <p style="margin: 10px 0; color: #555;">Quantum-as-a-Service platforms, industry solutions, enterprise licensing</p>
+                <div class="detail-item">
+                    <div class="label">TAM: USD 50-100M in Asia-Pacific by 2030</div>
+                    <div class="value">Margin: 60-80% | First-mover advantage in regional markets</div>
+                </div>
+                <div class="detail-item">
+                    <div class="label">AQCC Facility Access: Subsidized HPC for application development</div>
+                    <div class="value">Rental subsidy: 75% for 5 years | Talent CTC reimbursement: 50%</div>
+                </div>
+            </div>
+
+            <div class="incentive-category">
+                <h4>3. Quantum Education & Training</h4>
+                <p style="margin: 10px 0; color: #555;">Certification programs, university partnerships, corporate training, skill development</p>
+                <div class="detail-item">
+                    <div class="label">5,000 Specialists to Train by 2030</div>
+                    <div class="value">Training fees: INR 2-5 Lakhs per person | Corporate contracts: INR 1-10 Crores</div>
+                </div>
+                <div class="detail-item">
+                    <div class="label">APSSDC Partnership: Government-backed programs</div>
+                    <div class="value">Scaling from 1,000 (2025) to 5,000+ (2030)</div>
+                </div>
+            </div>
+
+            <div class="incentive-category">
+                <h4>4. Infrastructure & Real Estate</h4>
+                <p style="margin: 10px 0; color: #555;">Quantum Valley Towers (90 Lakh sq.ft), Hardware Park, commercial real estate</p>
+                <div class="detail-item">
+                    <div class="label">Occupancy: 40% (2026) → 90% (2030)</div>
+                    <div class="value">Commercial rental rates: INR 50-100/sq.ft (premium tech hub rates)</div>
+                </div>
+                <div class="detail-item">
+                    <div class="label">80,000 Seat Capacity Tower</div>
+                    <div class="value">Annual revenue potential: INR 150-200 Crores | Asset appreciation: 25-35% over 5 years</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Financial Projections (2025-2030)</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>2025</th>
+                        <th>2026</th>
+                        <th>2027</th>
+                        <th>2028</th>
+                        <th>2029</th>
+                        <th>2030</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total Ecosystem Revenue (INR Cr)</strong></td>
+                        <td>50</td>
+                        <td>200</td>
+                        <td>500</td>
+                        <td>1,000</td>
+                        <td>2,500</td>
+                        <td>5,000+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hardware Manufacturing (INR Cr)</strong></td>
+                        <td>10</td>
+                        <td>50</td>
+                        <td>200</td>
+                        <td>400</td>
+                        <td>1,000</td>
+                        <td>2,000+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Applications & SaaS (INR Cr)</strong></td>
+                        <td>20</td>
+                        <td>80</td>
+                        <td>200</td>
+                        <td>400</td>
+                        <td>900</td>
+                        <td>2,000+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Education & Training (INR Cr)</strong></td>
+                        <td>15</td>
+                        <td>50</td>
+                        <td>80</td>
+                        <td>150</td>
+                        <td>400</td>
+                        <td>800+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Real Estate & Infrastructure (INR Cr)</strong></td>
+                        <td>5</td>
+                        <td>20</td>
+                        <td>20</td>
+                        <td>50</td>
+                        <td>200</td>
+                        <td>200+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">Investment Risk & Mitigation</h3>
+            <div class="grid">
+                <div class="card">
+                    <h3>⚠️ Technology Risk</h3>
+                    <p class="description"><strong>Concern:</strong> Quantum tech evolving rapidly; NISQ stage still developing</p>
+                    <p class="description" style="margin-top: 10px;"><strong>Mitigation:</strong> Multiple qubit technologies deployed (superconducting, trapped ions, photonics); expert committee guidance; international partnerships with IBM/TCS</p>
+                </div>
+                <div class="card">
+                    <h3>⚠️ Market Adoption Risk</h3>
+                    <p class="description"><strong>Concern:</strong> Enterprise adoption slower than anticipated</p>
+                    <p class="description" style="margin-top: 10px;"><strong>Mitigation:</strong> Government procurement mandates; NQM backing; use-case focus in agriculture/healthcare with immediate ROI</p>
+                </div>
+                <div class="card">
+                    <h3>⚠️ Talent Availability Risk</h3>
+                    <p class="description"><strong>Concern:</strong> Limited quantum expertise globally</p>
+                    <p class="description" style="margin-top: 10px;"><strong>Mitigation:</strong> 20 universities empowered; international partnerships; remote work policies; talent CTC subsidies attracting experts</p>
+                </div>
+                <div class="card">
+                    <h3>⚠️ Competitive Risk</h3>
+                    <p class="description"><strong>Concern:</strong> Other states/countries developing similar hubs</p>
+                    <p class="description" style="margin-top: 10px;"><strong>Mitigation:</strong> First-mover advantage in India; manufacturing focus differentiates from pure software plays; government backing ensures stability</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Investment Entry Points</h3>
+            <div class="grid">
+                <div class="card" style="border-left: 5px solid var(--success);">
+                    <h3>🚀 Venture Capital (Early-Stage)</h3>
+                    <p class="description"><strong>Target:</strong> Quantum startups (first 100)</p>
+                    <p class="description" style="margin-top: 10px;"><strong>Ticket Size:</strong> INR 2-25 Cr per startup</p>
+                    <p class="description"><strong>Expected ROI:</strong> 10-15x over 5-7 years</p>
+                    <p class="description"><strong>Exit:</strong> Strategic acquisition by IBM, TCS, or multinational quantum firms</p>
+                </div>
+                <div class="card" style="border-left: 5px solid var(--primary);">
+                    <h3>🏭 Private Equity (Manufacturing)</h3>
+                    <p class="description"><strong>Target:</strong> Hardware manufacturers & component suppliers</p>
+                    <p class="description" style="margin-top: 10px;"><strong>Ticket Size:</strong> INR 50-200 Cr</p>
+                    <p class="description"><strong>Expected ROI:</strong> 8-12x over 5 years</p>
+                    <p class="description"><strong>Cash Flow:</strong> Export revenue starting 2027-2028</p>
+                </div>
+                <div class="card" style="border-left: 5px solid var(--accent);">
+                    <h3>🏢 Infrastructure Investment</h3>
+                    <p class="description"><strong>Target:</strong> Quantum Valley Towers, Hardware Park development</p>
+                    <p class="description" style="margin-top: 10px;"><strong>Ticket Size:</strong> INR 200-1,000 Cr</p>
+                    <p class="description"><strong>Expected ROI:</strong> 12-18% IRR (real estate + operational income)</p>
+                    <p class="description"><strong>Risk Profile:</strong> Lower risk, government-backed, operational by 2026</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Call to Action</h3>
+            <div class="key-points" style="background: linear-gradient(135deg, #0066cc, #003d82); color: white; padding: 20px; border-left: none; border-radius: 10px;">
+                <p style="margin-bottom: 15px;">🎯 <strong>Join India's Quantum Revolution</strong></p>
+                <ul style="color: rgba(255,255,255,0.95);">
+                    <li>First-mover advantage in Asia-Pacific quantum ecosystem (only 3 global quantum hubs exist)</li>
+                    <li>Government co-investment reducing venture risk by 30-50%</li>
+                    <li>Clear exit pathways through IBM, TCS, multinational M&A</li>
+                    <li>USD 1B+ ecosystem by 2030 with 100+ potential exits</li>
+                    <li>Tax benefits: Full SGST reimbursement + capital subsidies for 5 years</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Next Steps:</strong> Contact Apex Committee | Expert Committee Evaluation | SIPC Approval | Deploy to Amaravati</p>
+            </div>
+        </section>
+
+        <!-- STAKEHOLDERS TAB -->
+        <section id="tab-8">
+            <h2 class="section-title">🌍 Global Quantum Competitive Landscape</h2>
+
+            <h3 class="subsection-title">Global Investment Comparison</h3>
+            <div class="chart-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Country/Region</th>
+                            <th>Investment</th>
+                            <th>Key Focus</th>
+                            <th>Leading Institutions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>China</strong></td>
+                            <td><span class="badge badge-warning">USD 15 Billion</span></td>
+                            <td>Computing, Communication, Defense</td>
+                            <td>National Lab for QIS (Hefei), universities</td>
+                        </tr>
+                        <tr>
+                            <td><strong>European Union</strong></td>
+                            <td><span class="badge badge-primary">USD 10 Billion</span></td>
+                            <td>Quantum Flagship (2023-2032)</td>
+                            <td>Germany, France, distributed hubs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>United States</strong></td>
+                            <td><span class="badge badge-success">USD 5 Billion</span></td>
+                            <td>NQI 2018, NIST leadership</td>
+                            <td>MIT, IBM, Google, national labs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Japan</strong></td>
+                            <td><span class="badge">USD 2+ Billion</span></td>
+                            <td>IBM System deployment, 100K qubit goal</td>
+                            <td>Universities, corporations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>South Korea</strong></td>
+                            <td><span class="badge">USD 1-2 Billion</span></td>
+                            <td>IBM System One deployment</td>
+                            <td>Yonsei, Korean tech firms</td>
+                        </tr>
+                        <tr>
+                            <td><strong>India</strong></td>
+                            <td><span class="badge">INR 6,003.65 Cr (~USD 0.7B+)</span></td>
+                            <td>NQM 2023-31, regional hubs</td>
+                            <td>IIT Madras, IISc, DRDO, TCS</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">Quantum Computing Market Projections</h3>
+            <div class="metrics-grid">
+                <div class="metric">
+                    <div class="metric-label">India Market 2024</div>
+                    <div class="metric-value">USD 1B</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">India Market 2032</div>
+                    <div class="metric-value">USD 7B</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">CAGR (2024-2032)</div>
+                    <div class="metric-value">27%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Growth Multiple</div>
+                    <div class="metric-value">7x</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Leading Global Quantum Technology Providers</h3>
+            <div class="grid">
+                <div class="card">
+                    <h3>IBM</h3>
+                    <p class="description">
+                        <strong>Quantum Systems:</strong> IBM Quantum Heron (133 qubits)<br/>
+                        <strong>Architecture:</strong> Superconducting circuits<br/>
+                        <strong>Platform:</strong> Quantum as a Service (QaaS)<br/>
+                        <strong>India Focus:</strong> TCS partnership for India's largest quantum system
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Google</h3>
+                    <p class="description">
+                        <strong>Quantum Systems:</strong> Willow & Sycamore chips<br/>
+                        <strong>Architecture:</strong> Superconducting qubits<br/>
+                        <strong>Focus:</strong> Error correction, quantum supremacy demonstrations<br/>
+                        <strong>Applications:</strong> Drug discovery, optimization
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Microsoft</h3>
+                    <p class="description">
+                        <strong>Approach:</strong> Topological qubits (not yet deployed)<br/>
+                        <strong>Platform:</strong> Azure Quantum cloud service<br/>
+                        <strong>Focus:</strong> Error correction, scalable architecture<br/>
+                        <strong>Applications:</strong> Materials simulation
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>PsiQuantum</h3>
+                    <p class="description">
+                        <strong>Architecture:</strong> Photonic qubits<br/>
+                        <strong>Focus:</strong> Fault-tolerant quantum computing<br/>
+                        <strong>Key Feature:</strong> Room-temperature operation potential<br/>
+                        <strong>Stage:</strong> Development phase
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>IonQ</h3>
+                    <p class="description">
+                        <strong>Architecture:</strong> Trapped ions<br/>
+                        <strong>Platform:</strong> IonQ Cloud<br/>
+                        <strong>Advantage:</strong> High gate fidelity, easily reconfigurable<br/>
+                        <strong>Focus:</strong> Optimization, machine learning
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Quantinuum</h3>
+                    <p class="description">
+                        <strong>Architecture:</strong> Trapped ions + software<br/>
+                        <strong>Focus:</strong> Chemistry simulation, materials design<br/>
+                        <strong>Key Demo:</strong> CO₂ capture modeling<br/>
+                        <strong>Applications:</strong> Climate, energy sectors
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Key Strategic Applications Globally</h3>
+            <div class="grid">
+                <div class="card accent-primary">
+                    <h3>Cryptography & Cybersecurity</h3>
+                    <p class="description">
+                        <strong>Technology:</strong> QKD (Quantum Key Distribution) & Post-Quantum Cryptography<br/>
+                        <strong>Status:</strong> Pilots underway in US, EU, China<br/>
+                        <strong>Global Impact:</strong> NIST standardizing PQC algorithms<br/>
+                        <strong>AP Opportunity:</strong> Secure communication infrastructure for defense & finance
+                    </p>
+                </div>
+                <div class="card accent-secondary">
+                    <h3>Healthcare & Pharma</h3>
+                    <p class="description">
+                        <strong>Pilot:</strong> IBM-Moderna RNA folding using 80 qubits<br/>
+                        <strong>Application:</strong> Vaccine design acceleration<br/>
+                        <strong>India Startup:</strong> BosonQ Psi applying quantum chemistry<br/>
+                        <strong>Market Size:</strong> USD 2+ billion opportunity
+                    </p>
+                </div>
+                <div class="card accent-success">
+                    <h3>Materials Science</h3>
+                    <p class="description">
+                        <strong>Applications:</strong> Superconductors, catalysts, battery chemistry<br/>
+                        <strong>Pilot:</strong> Mercedes-Benz & IBM battery simulation<br/>
+                        <strong>Impact:</strong> Accelerating green energy development<br/>
+                        <strong>Timeline:</strong> 3-5 years for commercial applications
+                    </p>
+                </div>
+                <div class="card accent-warning">
+                    <h3>Energy & Climate</h3>
+                    <p class="description">
+                        <strong>Use Case:</strong> Grid optimization for renewable integration<br/>
+                        <strong>Demo:</strong> Quantinuum CO₂ capture modeling<br/>
+                        <strong>Impact:</strong> Supporting decarbonization goals<br/>
+                        <strong>Global Investment:</strong> USD 500M+ annually
+                    </p>
+                </div>
+            </div>
+
+            <h2 class="section-title">🎯 Amaravati's Global Competitive Positioning</h2>
+            <div class="card" style="border-left: 5px solid #00d4ff;">
+                <h3 style="color: #00d4ff;">Why Amaravati Stands Out</h3>
+                <div class="key-points">
+                    <ul>
+                        <li><strong>Strategic Timing:</strong> Entering quantum ecosystem as global shift from research to commercialization occurs</li>
+                        <li><strong>Integrated Approach:</strong> Computing + Communication + Sensing + Applications all in one hub</li>
+                        <li><strong>Startup Ecosystem:</strong> 100+ startups targeted by 2030 vs 10-20 in competing global hubs</li>
+                        <li><strong>Talent at Scale:</strong> 5,000 trained specialists vs limited supply globally</li>
+                        <li><strong>Manufacturing Hub:</strong> INR 5,000 crore annual exports targeting Asia-Pacific market</li>
+                        <li><strong>Government-Industry Partnership:</strong> Deep cooperation with IBM, TCS, L&T de-risks execution</li>
+                        <li><strong>National Alignment:</strong> Complementing India's National Quantum Mission with state-level execution</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p><strong>Andhra Pradesh Quantum Valley Policy 2025-30</strong></p>
+        <p>Official Government of Andhra Pradesh Initiative | Policy Effective: November 11, 2025</p>
+        <p>For official documents and applications: <strong>AQCC.AP.GOV.IN</strong></p>
+        <p style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px;">Dashboard v1.0 | Last Updated: January 2026</p>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                search: "Search policy, incentives, case studies...",
+                overview: "Overview",
+                policyDetails: "Policy Details",
+                caseStudies: "Case Studies",
+                successMetrics: "Success Metrics"
+            },
+            te: {
+                search: "విధానం, ప్రేరణలు, కేస్ స్టడీలు చెడ్డ...",
+                overview: "అవలోకనం",
+                policyDetails: "విధాన వివరాలు",
+                caseStudies: "కేస్ స్టడీలు",
+                successMetrics: "విజయ కొలమానాలు"
+            },
+            hi: {
+                search: "नीति, प्रोत्साहन, केस स्टडी खोजें...",
+                overview: "अवलोकन",
+                policyDetails: "नीति विवरण",
+                caseStudies: "केस स्टडी",
+                successMetrics: "सफलता मेट्रिक्स"
+            }
+        };
+
+        let currentLanguage = 'en';
+        let allContent = [];
+
+        function switchTab(tabIndex, element) {
+            const sections = document.querySelectorAll('section');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            
+            sections.forEach(s => s.classList.remove('active'));
+            navTabs.forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(`tab-${tabIndex}`).classList.add('active');
+            element.classList.add('active');
+            document.getElementById('searchResults').style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        document.querySelectorAll('.collapsible').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        function toggleDarkMode() {
+            document.body.style.background = document.body.style.background === 'rgb(248, 249, 250)' 
+                ? '#1a1a2e' 
+                : 'var(--light)';
+            document.body.style.color = document.body.style.color === 'rgb(44, 62, 80)' 
+                ? '#f8f9fa' 
+                : 'var(--text)';
+        }
+
+        function changeLanguage() {
+            const selected = document.getElementById('languageSelect').value;
+            currentLanguage = selected;
+            alert(`Language changed to: ${selected.toUpperCase()}\nNote: Full multilingual support requires backend translation service integration.`);
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (!query) {
+                document.getElementById('searchResults').style.display = 'none';
+                return;
+            }
+
+            const searchableContent = {
+                'quantum computing': ['PREAMBLE', 'QUANTUM COMPUTING FUNDAMENTALS', 'Global QUANTUM LANDSCAPE'],
+                'incentive': ['INCENTIVES', 'Startup Grants', 'Academic Grants', 'Patent Filing'],
+                'startup': ['Startups', 'Go-to-Market Support', 'Seed Funding', 'Rental Subsidy'],
+                'hardware': ['Hardware Manufacturers', 'Capital Subsidy', 'Quantum Hardware Park'],
+                'investment': ['Investment', 'Investor Prospectus', 'Financial Projections'],
+                'case study': ['Case Studies', 'QpiAI', 'BosonQ Psi', 'Q-CTRL'],
+                'timeline': ['Timeline', 'Strategic Roadmap', '2025', '2030'],
+                'job': ['Jobs', 'High-Value Employment', 'Talent', 'Specialists'],
+                'export': ['Export', 'Supply Chain', 'INR 5,000 Crore'],
+                'university': ['Universities', 'Academic', 'Education', 'IIT'],
+                'ibm': ['IBM', 'TCS', 'Partner', 'Collaboration'],
+                'qubits': ['Qubits', '3000', 'Quantum Capacity'],
+                'global': ['Global', 'China', 'EU', 'Competition']
+            };
+
+            let results = [];
+            for (const [key, sections] of Object.entries(searchableContent)) {
+                if (key.includes(query) || query.includes(key)) {
+                    sections.forEach(section => {
+                        results.push({
+                            title: section,
+                            snippet: `Found information about ${section.toLowerCase()} in the policy framework`
+                        });
+                    });
+                }
+            }
+
+            displaySearchResults(results, query);
+        }
+
+        function displaySearchResults(results, query) {
+            const resultsPanel = document.getElementById('searchResults');
+            if (results.length === 0) {
+                resultsPanel.innerHTML = '<div class="search-result-item"><div class="search-result-title">No results found</div><div class="search-result-snippet">Try searching for: quantum computing, incentive, startup, hardware, timeline, job, case study, investment</div></div>';
+            } else {
+                resultsPanel.innerHTML = results.map(r => 
+                    `<div class="search-result-item" onclick="alert('Navigate to: ${r.title}')">
+                        <div class="search-result-title">📄 ${r.title}</div>
+                        <div class="search-result-snippet">${r.snippet}</div>
+                    </div>`
+                ).join('');
+            }
+            resultsPanel.style.display = 'block';
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').style.display = 'none';
+        }
+
+        function exportToPDF() {
+            const element = document.body;
+            const opt = {
+                margin: 10,
+                filename: 'AP_Quantum_Valley_Policy_Dashboard.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+            };
+            
+            alert('PDF export ready! Adding a library would enable full export.\n\nDownload sections:\n✓ Overview\n✓ Policy Details\n✓ Incentives\n✓ Case Studies\n✓ Success Metrics\n✓ Investor Prospectus');
+        }
+
+        function updateCalculator() {
+            const orgType = document.getElementById('org-type').value;
+            const stage = document.getElementById('project-stage').value;
+            
+            if (orgType && stage) {
+                document.getElementById('results').classList.remove('show');
+            }
+        }
+
+        function calculateIncentives() {
+            const orgType = document.getElementById('org-type').value;
+            const stage = document.getElementById('project-stage').value;
+            const investment = parseFloat(document.getElementById('investment').value) || 0;
+            const employees = parseInt(document.getElementById('employees').value) || 0;
+
+            let results = [];
+            let totalIncentive = 0;
+
+            if (!orgType || !stage) {
+                alert('Please select organization type and project stage');
+                return;
+            }
+
+            if (orgType === 'startup') {
+                results.push({label: 'Startup Grants', value: 'INR 30 Lakhs (phase-wise)'});
+                results.push({label: 'Go-to-Market Support', value: 'Up to INR 5 Crore'});
+                results.push({label: 'Patent Filing Support', value: '75% (Intl: INR 20L max)'});
+                results.push({label: 'Rental Subsidy', value: '100% for 20 employees'});
+                results.push({label: 'AQCC Facility Access', value: 'Subsidized/Free'});
+                totalIncentive = stage === 'concept' ? 30 : stage === 'development' ? 100 : stage === 'scaling' ? 500 : 500;
+            } 
+            else if (orgType === 'academic') {
+                results.push({label: 'Academic Grants', value: 'INR 30 Lakhs (phase-wise)'});
+                results.push({label: 'Patent Filing Support', value: '75% (Intl: INR 20L max)'});
+                results.push({label: 'Rental Subsidy', value: '100% for 50 employees'});
+                results.push({label: 'Accelerator Support', value: 'Up to INR 8 Lakhs'});
+                results.push({label: 'AQCC Facility Access', value: 'Subsidized/Free'});
+                totalIncentive = 30;
+            }
+            else if (orgType === 'hardware') {
+                const capitalSubsidy = investment < 50 ? (investment * 0.5) : 0;
+                results.push({label: 'Capital Subsidy', value: `${(capitalSubsidy).toFixed(1)} Crore (50% for early bird)`});
+                results.push({label: 'Power Subsidy', value: 'INR 1/unit for 5 years'});
+                results.push({label: 'SGST Subsidy', value: '100% for 5 years'});
+                results.push({label: 'Stamp Duty', value: '100% reimbursement'});
+                results.push({label: 'Land Discount', value: 'Variable in Hardware Park'});
+                totalIncentive = capitalSubsidy * 100;
+            }
+            else if (orgType === 'applications') {
+                if (investment < 10) {
+                    alert('Minimum revenue/funding: INR 10 Crores');
+                    return;
+                }
+                const capexSupport = Math.min(investment * 0.5, 10);
+                const talentSupport = employees > 0 ? Math.min(employees * 0.5 * 6, 50) : 0;
+                results.push({label: 'Rental Subsidy', value: '75% for 5 years (max INR 10K/seat)'});
+                results.push({label: 'IT Hardware CAPEX', value: `${capexSupport.toFixed(1)} Crore (50%, max INR 10Cr)`});
+                results.push({label: 'Quantum Import Duty', value: '50% (first 20 firms)'});
+                results.push({label: 'Talent CTC Support', value: `${talentSupport.toFixed(0)} Lakhs (12 months)`});
+                results.push({label: 'Power Subsidy', value: 'INR 1/unit for 5 years'});
+                results.push({label: 'AQCC + HPC Access', value: 'Subsidized charges'});
+                totalIncentive = (capexSupport + talentSupport/100) * 100;
+            }
+            else if (orgType === 'hpc') {
+                results.push({label: 'Maximum Facilities Supported', value: '4 under the policy'});
+                results.push({label: 'Capital Subsidy', value: '50% IT Hardware'});
+                results.push({label: 'Power Subsidy', value: 'INR 1/unit'});
+                results.push({label: 'Land Incentive', value: 'Discount in Hardware Park'});
+                results.push({label: 'Tailored Package', value: 'Post Expert Committee review'});
+                totalIncentive = investment * 0.5;
+            }
+
+            let html = '';
+            results.forEach(r => {
+                html += `<div class="result-item"><div class="label">${r.label}</div><div class="value">${r.value}</div></div>`;
+            });
+
+            html += `<div class="result-item" style="border-left-color: #00d4ff; background: rgba(0, 212, 255, 0.1); margin-top: 20px;">
+                <div class="label">ESTIMATED TOTAL INCENTIVE VALUE</div>
+                <div class="value" style="font-size: 24px; margin-top: 10px;">≈ INR ${totalIncentive.toFixed(0)} Lakhs</div>
+            </div>`;
+
+            document.getElementById('results-content').innerHTML = html;
+            document.getElementById('results').classList.add('show');
+        }
+
+        function downloadResults() {
+            const orgType = document.getElementById('org-type').value;
+            const stage = document.getElementById('project-stage').value;
+            const investment = document.getElementById('investment').value;
+            
+            let content = `INCENTIVE CALCULATION REPORT\n`;
+            content += `========================\n\n`;
+            content += `Organization Type: ${orgType.toUpperCase()}\n`;
+            content += `Project Stage: ${stage}\n`;
+            content += `Total Investment: INR ${investment} Crore\n\n`;
+            content += `${document.getElementById('results-content').innerText}\n\n`;
+            content += `Disclaimer: This is an estimate based on policy guidelines. Actual incentives depend on Expert Committee evaluation and project details.\n`;
+            
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Incentive_Calculation_Report.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function downloadPolicy() {
+            alert('Official policy document available at: AQCC.AP.GOV.IN\n\nTo download:\n1. Visit the official website\n2. Request PDF from Expert Committee\n3. Subscribe for quarterly updates');
+        }
+    </script>
+</body>
+</html>
